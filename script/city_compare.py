@@ -5,11 +5,12 @@ import json
 import os
 from datetime import datetime
 
-class CityCompare:
+class CityComparePage(tk.Frame):
 
-    # App Initialization
-    def __init__(self):
-        self.window = tk.Tk()
+    # Page Initialization
+    def __init__(self, parent, app):
+        super().__init__(parent, bg="white")
+        self.app = app
         self.load_data()
         self.display_widgets()
 
@@ -26,13 +27,31 @@ class CityCompare:
 
     # Display Widgets
     def display_widgets(self):
-        self.window.title("City Compare")
-        self.window.geometry("500x600")
-        self.window.configure(bg="white")
+
+        # Creates frame for back button
+        self.back_button_frame = tk.Frame(
+            self,
+            bg="white"
+            )
+
+        # Back button (goes back to the home page)
+        self.back_button = tk.Button(
+            self.back_button_frame,
+            text="Back to home page",
+            font=("Arial", 15, "bold"),
+            width=15,
+            height=2,
+            bg="white",
+            command=self.go_back
+            )
+        self.back_button.grid(row=0, column=0, padx=10, pady=10)
+
+        # Packs back button frame
+        self.back_button_frame.pack()
 
         # Title/Header
         self.header = tk.Label(
-            self.window,
+            self,
             text="City Compare",
             font=("Arial", 20, "bold"),
             bg="white",
@@ -40,22 +59,22 @@ class CityCompare:
             )
         self.header.pack(pady=(10,10))
 
-        # Creates The frame which the dropdowns and button will stay
+        # Creates The frame which the dropdowns and buttons will stay
         self.button_frame = tk.Frame(
-            self.window,
+            self,
             bg="white"
             )
 
         # First dropdown
         self.state_a = tk.StringVar(value=self.states[0])
         self.menu_a = tk.OptionMenu(self.button_frame, self.state_a, *self.states)
-        self.menu_a.config(font=("Arial", 15, "bold"), width=20, bg="white")
+        self.menu_a.config(font=("Arial", 15, "bold"), width=20, bg="lightblue")
         self.menu_a.grid(row=0, column=0, padx=10, pady=10)
 
         # Second dropdown
         self.state_b = tk.StringVar(value=self.states[1])
         self.menu_b = tk.OptionMenu(self.button_frame, self.state_b, *self.states)
-        self.menu_b.config(font=("Arial", 15, "bold"), width=20, bg="white")
+        self.menu_b.config(font=("Arial", 15, "bold"), width=20, bg="lightblue")
         self.menu_b.grid(row=1, column=0, padx=10, pady=10)
 
         # Compare button
@@ -75,7 +94,7 @@ class CityCompare:
 
         # Where the result will be shown
         self.result_label = tk.Label(
-            self.window,
+            self,
             text="Pick two places and press Compare",
             font=("Arial", 12),
             bg="white",
@@ -164,10 +183,6 @@ class CityCompare:
         )
         self.result_label.config(text=text)
 
-    # Runs the program when called
-    def run(self):
-        self.window.mainloop()
-
-if __name__ == "__main__":
-    app = CityCompare()
-    app.run()
+    # Goes back to the home page
+    def go_back(self):
+        self.app.show_page("home")
