@@ -2,7 +2,10 @@
 # Run this file to start the program:  python homepage.py
 
 import tkinter as tk
+
+# Imports other pages
 from city_compare import CityComparePage
+from todays_plan import TodaysPlanPage
 
 # ==========================================
 # THE HOME PAGE 
@@ -41,7 +44,8 @@ class HomePage(tk.Frame):
             font=("Arial", 15, "bold"),
             width=20,
             height=3,
-            bg="lightblue"
+            bg="lightblue",
+            command=self.open_todays_plan
             )
         self.todays_plan.grid(row=0, column=0, padx=10, pady=10)
 
@@ -93,6 +97,8 @@ class HomePage(tk.Frame):
     # Functions that will be used as event listener for buttons
     def open_city_compare(self):
         self.app.show_page("city_compare")
+    def open_todays_plan(self):
+        self.app.show_page("todays_plan")
 
 
 # ==========================================
@@ -116,6 +122,7 @@ class WeatherApp:
         # A dictionary: page name -> page
         self.pages = {}
         self.pages["home"] = HomePage(self.container, self)
+        self.pages["todays_plan"] = TodaysPlanPage(self.container, self)
         self.pages["city_compare"] = CityComparePage(self.container, self)
 
         # Put every page in the same spot of the container
