@@ -1,5 +1,8 @@
 # Weather App Planner 
 
+This Weather Planner App is a Python GUI app that fetches weather forecasts to help plan your day around heat,
+with hourly activity planning, safe-window advice, hydration guidance, and city comparison
+
 ### Pages:
 1. Homepage
 2. Activity Advisor
