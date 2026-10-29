@@ -63,6 +63,27 @@ class TodaysPlanPage(tk.Frame):
             bg="white"
             )
 
+    # Gets the weather of one place for the current hour
+    def get_city_data(self, state):
+        place = self.data[state]
+
+        # The json only has hours 6 to 20, so keep the hour inside that range
+        hour = datetime.now().hour
+        if hour < 6:
+            hour = 6
+        if hour > 20:
+            hour = 20
+
+        for entry in place["hours"]:
+            if entry["hour"] == hour:
+                return {
+                    "name": place["city"],
+                    "temperature": entry["temp_c"],
+                    "humidity": entry["humidity_pct"],
+                    "uv_index": entry["uv_index"],
+                    "rain_chance": entry["rain_chance_pct"],
+                }
+
     def on_click(self):
         ...
 
